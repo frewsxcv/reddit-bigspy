@@ -1,7 +1,7 @@
 // TODO: should not be here
 var Reddit, RedditBigSpy;
 
-(function ($) {
+(function ($, tinycolor) {
     "use strict";
 
 
@@ -201,4 +201,4 @@ var Reddit, RedditBigSpy;
         var app = new RedditBigSpy();
         app.start();
     });
-}(window.jQuery));
+}(window.jQuery, window.tinycolor));
