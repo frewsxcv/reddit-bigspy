@@ -135,7 +135,6 @@
             upperBound = 3000.0;
         score = +score;
         desatAmount = score > upperBound ? 0: 100 - (100 * score / upperBound);
-        console.log(desatAmount);
         return tinycolor.desaturate(green, desatAmount).toHexString();
     };
 
