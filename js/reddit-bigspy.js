@@ -130,27 +130,19 @@
         this.$feed = $("#feed");
     };
 
-    RedditBigSpyView.prototype.scoreToFontSize = function (score) {
+    RedditBigSpyView.prototype.getPostColor = function (score) {
+        var green = tinycolor("#ffff4a"), desatAmount,
+            upperBound = 3000.0;
         score = +score;
-        if (score < 10) {
-            return "14px";
-        }
-        if (score < 100) {
-            return "18px";
-        }
-        if (score < 1000) {
-            return "22px";
-        }
-        if (score < 3000) {
-            return "24px";
-        }
-        return "26px";
+        desatAmount = score > upperBound ? 0: 100 - (100 * score / upperBound);
+        console.log(desatAmount);
+        return tinycolor.desaturate(green, desatAmount).toHexString();
     };
 
     RedditBigSpyView.prototype.showPost = function (post) {
         if (post) {
             var $elem = $("<li>" + post.title + ": " + post.score + "</li>").hide();
-            $elem.css("font-size", this.scoreToFontSize(post.score));
+            $elem.css("color", this.getPostColor(post.score));
             var MAX_ITEMS = 30;
             this.$feed.prepend($elem);
             $elem.slideDown();
