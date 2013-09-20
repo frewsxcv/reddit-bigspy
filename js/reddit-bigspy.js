@@ -1,6 +1,3 @@
-// TODO: should not be here
-var Reddit, RedditBigSpy;
-
 (function ($, tinycolor) {
     "use strict";
 
@@ -17,7 +14,7 @@ var Reddit, RedditBigSpy;
 
     /* Redit */
 
-    Reddit = function () {
+    var Reddit = function () {
         this.currSubreddit = undefined;
 
         this.hot = [];
@@ -167,7 +164,7 @@ var Reddit, RedditBigSpy;
 
     /* Reddit BigSpy */
 
-    RedditBigSpy = function () {
+    var RedditBigSpy = function () {
         this.api = new Reddit();
         this.view = new RedditBigSpyView();
         this.percentNew = 0.2;
