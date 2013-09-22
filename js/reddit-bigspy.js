@@ -140,7 +140,8 @@
 
     RedditBigSpyView.prototype.showPost = function (post) {
         if (post) {
-            var $li, $row, $score, $subreddit, $subredditLink;
+            var $li, $row, $score, $postTitle, $subredditLink,
+                $subredditLabel;
 
             $li = $("<li>");
             $row = $("<div class='row feed-item'>");
@@ -150,13 +151,19 @@
             $score.css("background-color", this.getPostColor(post.score));
             $("<div class='col-md-1 score-cell'>").append($score).appendTo($row);
 
-            // subreddit/title column
+            // title column
             $subredditLink = $("<a>")
                 .attr("href", "http://reddit.com/r/" + post.subreddit)
                 .text(post.subreddit);
-            $subreddit = $("<span class='label label-default'>")
+            $subredditLabel = $("<span class='label label-default'>")
                 .append($subredditLink);
-            $("<div class='col-md-10'>").append($subreddit).append("&nbsp;" + post.title).appendTo($row);
+            $postTitle = $("<a>")
+                .attr("href", post.url)
+                .text(post.title);
+            $("<div class='col-md-10 title-cell'>")
+                .append($subredditLabel)
+                .append($postTitle)
+                .appendTo($row);
 
             $("<div class='col-md-1'>").text("comments").appendTo($row);
             $li.wrapInner($row).hide();
