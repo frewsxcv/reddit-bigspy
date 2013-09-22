@@ -140,11 +140,15 @@
 
     RedditBigSpyView.prototype.showPost = function (post) {
         if (post) {
-            var $elem = $("<li>" + post.title + ": " + post.score + "</li>").hide();
-            $elem.css("color", this.getPostColor(post.score));
+            var $li, $row = $("<div class='row'>");
+            $("<div class='col-md-1'>").text(post.score).appendTo($row);
+            $("<div class='col-md-1'>").text(post.subreddit).appendTo($row);
+            $("<div class='col-md-12'>").text(post.title).appendTo($row);
+            $li = $("<li>").wrapInner($row).hide();
+            $li.css("color", this.getPostColor(post.score));
             var MAX_ITEMS = 30;
-            this.$feed.prepend($elem);
-            $elem.slideDown();
+            this.$feed.prepend($li);
+            $li.slideDown();
 
             if (this.$feed.children().length > MAX_ITEMS) {
                 this.$feed.children().last().remove();
