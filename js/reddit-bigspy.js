@@ -140,7 +140,7 @@
 
     RedditBigSpyView.prototype.showPost = function (post) {
         if (post) {
-            var $li, $row = $("<div class='row'>");
+            var $li, $row = $("<div class='row feed-item'>");
             $("<div class='col-md-1'>").text(post.score).appendTo($row);
             $("<div class='col-md-1'>").text(post.subreddit).appendTo($row);
             $("<div class='col-md-12'>").text(post.title).appendTo($row);
