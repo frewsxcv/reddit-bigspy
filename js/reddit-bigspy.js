@@ -140,11 +140,16 @@
 
     RedditBigSpyView.prototype.showPost = function (post) {
         if (post) {
-            var $li = $("<li>");
-            var $row = $("<div class='row feed-item'>");
-            var $score = $("<span class='badge'>").text(post.score);
+            var $li, $row, $score;
+
+            $li = $("<li>");
+            $row = $("<div class='row feed-item'>");
+
+            // score column
+            $score = $("<span class='badge'>").text(post.score);
             $score.css("background-color", this.getPostColor(post.score));
             $("<div class='col-md-1 score-cell'>").append($score).appendTo($row);
+
             $("<div class='col-md-1'>").text(post.subreddit).appendTo($row);
             $("<div class='col-md-9'>").text(post.title).appendTo($row);
             $("<div class='col-md-1'>").text("comments").appendTo($row);
