@@ -140,7 +140,7 @@
 
     RedditBigSpyView.prototype.showPost = function (post) {
         if (post) {
-            var $li, $row, $score;
+            var $li, $row, $score, $subreddit;
 
             $li = $("<li>");
             $row = $("<div class='row feed-item'>");
@@ -150,8 +150,10 @@
             $score.css("background-color", this.getPostColor(post.score));
             $("<div class='col-md-1 score-cell'>").append($score).appendTo($row);
 
-            $("<div class='col-md-1'>").text(post.subreddit).appendTo($row);
-            $("<div class='col-md-9'>").text(post.title).appendTo($row);
+            // subreddit/title column
+            $subreddit = $("<span class='label label-default'>").text(post.subreddit);
+            $("<div class='col-md-10'>").append($subreddit).append("&nbsp;" + post.title).appendTo($row);
+
             $("<div class='col-md-1'>").text("comments").appendTo($row);
             $li.wrapInner($row).hide();
             var MAX_ITEMS = 30;
