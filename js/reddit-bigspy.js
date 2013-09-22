@@ -149,7 +149,7 @@
             $li.css("background-color", this.getPostColor(post.score));
             var MAX_ITEMS = 30;
             this.$feed.prepend($li);
-            $li.slideDown();
+            $li.show("drop");
 
             if (this.$feed.children().length > MAX_ITEMS) {
                 this.$feed.children().last().remove();
