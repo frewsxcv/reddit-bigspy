@@ -143,7 +143,8 @@
             var $li, $row = $("<div class='row feed-item'>");
             $("<div class='col-md-1'>").text(post.score).appendTo($row);
             $("<div class='col-md-1'>").text(post.subreddit).appendTo($row);
-            $("<div class='col-md-10'>").text(post.title).appendTo($row);
+            $("<div class='col-md-9'>").text(post.title).appendTo($row);
+            $("<div class='col-md-1'>").text("comments").appendTo($row);
             $li = $("<li>").wrapInner($row).hide();
             $li.css("color", this.getPostColor(post.score));
             var MAX_ITEMS = 30;
