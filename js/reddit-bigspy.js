@@ -18,15 +18,8 @@
         this.currSubreddit = undefined;
         this.currPost = undefined;
 
-        this.hot = [];
-        this.lastHot = undefined;
-
-        this.new = [];
-        this.lastNew = undefined;
-
-        this.seen = {};
-
         this.mode = "posts";
+        this._reset();
     };
 
     RedditApi.prototype._reset = function () {
