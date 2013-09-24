@@ -128,6 +128,17 @@
 
     var RedditBigSpyView = function () {
         this.$feed = $("#feed");
+        this.registerSettings();
+    };
+
+    RedditBigSpyView.prototype.registerSettings = function () {
+        $("#settings-dialog").dialog({
+            "autoOpen": false,
+        });
+
+        $("#settings-button").click(function () {
+            $("#settings-dialog").dialog("open");
+        });
     };
 
     RedditBigSpyView.prototype.getPostColor = function (score) {
