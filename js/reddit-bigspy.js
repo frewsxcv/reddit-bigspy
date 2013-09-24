@@ -136,15 +136,17 @@
     };
 
     RedditBigSpyView.prototype.registerSettings = function () {
+        var that = this;
+
         this.$settingsDialog.dialog({
             "autoOpen": false,
         });
 
-        this.$percentNewSlider.slider();
-
         this.$settingsButton.click(function () {
-            this.$settingsDialog.dialog("open");
+            that.$settingsDialog.dialog("open");
         });
+
+        this.$percentNewSlider.slider();
     };
 
     RedditBigSpyView.prototype.getPostColor = function (score) {
