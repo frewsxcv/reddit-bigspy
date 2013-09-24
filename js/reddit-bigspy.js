@@ -159,6 +159,7 @@
 
         this.$settingsDialog.dialog({
             "autoOpen": false,
+            "dialogClass": "no-close",
             "buttons": {
                 "Cancel": function () {
                     that.updatePercentNewView(that.app.percentNew);
