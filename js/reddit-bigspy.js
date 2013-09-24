@@ -233,7 +233,7 @@
     RedditBigSpyView.prototype.showPost = function (post) {
         if (post) {
             var $li, $row, $score, $postTitle, $subredditLink,
-                $subredditLabel;
+                $subredditLabel, $commentsCell;
 
             $li = $("<li>");
             $row = $("<div class='row feed-item'>");
@@ -252,12 +252,19 @@
             $postTitle = $("<a>")
                 .attr("href", post.url)
                 .text(post.title);
-            $("<div class='col-md-10 title-cell'>")
+            $("<div class='col-md-9 col-lg-10 title-cell'>")
                 .append($subredditLabel)
                 .append($postTitle)
                 .appendTo($row);
 
-            $("<div class='col-md-1'>").text("comments").appendTo($row);
+            // comments cell
+            $commentsCell = $("<div class='col-md-2 col-lg-1'>")
+                .appendTo($row);
+            $("<a>")
+                .attr("href", "#")
+                .text("comments").appendTo($commentsCell);
+
+
             $li.wrapInner($row).hide();
             var MAX_ITEMS = 30;
             this.$feed.prepend($li);
