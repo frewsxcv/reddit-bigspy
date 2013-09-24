@@ -136,6 +136,8 @@
             "autoOpen": false,
         });
 
+        $("#percent-new-slider").slider();
+
         $("#settings-button").click(function () {
             $("#settings-dialog").dialog("open");
         });
