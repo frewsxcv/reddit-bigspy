@@ -282,7 +282,8 @@
             .attr("href", "#")
             .text("comments");
         $commentsCell = $("<div class='col-md-2 col-lg-1'>")
-            .appendTo($row);
+            .appendTo($row)
+            .append($commentsLink);
 
 
 
