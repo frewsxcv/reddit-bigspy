@@ -156,7 +156,7 @@
         // percent new/popular sliders/text
 
         this.$percentNewSlider.slider({"value": this.app.percentNew});
-        this.$percentNew.text(this.app.percentNew * 100);
+        this.$percentNew.text(this.app.percentNew);
         this.$percentPopular.text(100 - this.app.percentNew);
 
         this.$percentNewSlider.on("slide", function (evt, ui) {
