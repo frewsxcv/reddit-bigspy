@@ -142,6 +142,8 @@
     RedditBigSpyView.prototype.registerSettings = function () {
         var that = this;
 
+        // settings button/dialog
+
         this.$settingsDialog.dialog({
             "autoOpen": false,
         });
@@ -149,6 +151,9 @@
         this.$settingsButton.click(function () {
             that.$settingsDialog.dialog("open");
         });
+
+
+        // percent new/popular sliders/text
 
         this.$percentNewSlider.slider({"value": this.app.percentNew * 100});
         this.$percentNew.text(this.app.percentNew * 100);
