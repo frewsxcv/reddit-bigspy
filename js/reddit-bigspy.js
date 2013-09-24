@@ -144,6 +144,7 @@
     var RedditBigSpyView = function (app) {
         this.app = app;
 
+        this.$navbarTitle = $("#navbar-title");
         this.$feed = $("#feed");
         this.$settingsDialog = $("#settings-dialog");
         this.$settingsButton = $("#settings-button");
@@ -153,6 +154,10 @@
         this.$subredditField = $("#subreddit-field");
 
         this.setupSettings();
+    };
+
+    RedditBigSpyView.prototype.setTitle = function (title) {
+        this.$navbarTitle.text(title);
     };
 
     RedditBigSpyView.prototype.clear = function () {
@@ -176,10 +181,17 @@
                 "Save": function () {
                     var newSub = $.trim(that.$subredditField.val());
                     var oldSub = that.app.api.currSubreddit || "";
+                    var newTitle = "Posts from ";
 
                     that.app.percentNew = updatedPercentNew;
 
                     if (newSub !== oldSub) {
+                        if (newSub) {
+                            newTitle += "/r/" + newSub;
+                        } else {
+                            newTitle += "all subreddits";
+                        }
+                        that.setTitle(newTitle);
                         that.app.api.switchSubreddit(newSub);
                         that.clear();
                     }
