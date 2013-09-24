@@ -140,7 +140,7 @@
     };
 
     RedditBigSpyView.prototype.setupSettings = function () {
-        var that = this;
+        var that = this, updatedPercentNew;
 
         // settings button/dialog
 
@@ -148,8 +148,12 @@
             "autoOpen": false,
             "buttons": {
                 "Cancel": function () {
+                    that.updatePercentNewView(that.app.percentNew);
+                    $(this).dialog("close");
                 },
                 "Save": function () {
+                    that.app.percentNew = updatedPercentNew;
+                    $(this).dialog("close");
                 },
             },
         });
@@ -161,15 +165,19 @@
 
         // percent new/popular sliders/text
 
-        this.$percentNewSlider.slider({"value": this.app.percentNew});
-        this.$percentNew.text(this.app.percentNew);
-        this.$percentPopular.text(100 - this.app.percentNew);
+        this.updatePercentNewView(this.app.percentNew);
 
         this.$percentNewSlider.on("slide", function (evt, ui) {
             that.$percentNew.text(ui.value);
             that.$percentPopular.text(100 - ui.value);
-            that.app.percentNew = ui.value;
+            updatedPercentNew = ui.value;
         });
+    };
+
+    RedditBigSpyView.prototype.updatePercentNewView = function (percentNew) {
+        this.$percentNewSlider.slider({"value": percentNew});
+        this.$percentNew.text(percentNew);
+        this.$percentPopular.text(100 - percentNew);
     };
 
     RedditBigSpyView.prototype.getPostColor = function (score) {
