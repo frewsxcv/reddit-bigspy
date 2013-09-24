@@ -247,48 +247,51 @@
     };
 
     RedditBigSpyView.prototype.showPost = function (post) {
-        if (post) {
-            var $li, $row, $score, $postTitle, $subredditLink,
-                $subredditLabel, $commentsCell;
+        if (!post) {
+            console.log("post was empty");
+        }
 
-            $li = $("<li>");
-            $row = $("<div class='row feed-item'>");
+        var $li, $row, $score, $postTitle, $subredditLink,
+            $subredditLabel, $commentsCell;
 
-            // score cell
-            $score = $("<span class='badge'>").text(post.score);
-            $score.css("background-color", this.getPostColor(post.score));
-            $("<div class='col-md-1 score-cell'>").append($score).appendTo($row);
+        $li = $("<li>");
+        $row = $("<div class='row feed-item'>");
 
-            // title cell
-            $subredditLink = $("<a>")
-                .attr("href", "http://reddit.com/r/" + post.subreddit)
-                .text(post.subreddit);
-            $subredditLabel = $("<span class='label label-default'>")
-                .append($subredditLink);
-            $postTitle = $("<a>")
-                .attr("href", post.url)
-                .text(post.title);
-            $("<div class='col-md-9 col-lg-10 title-cell'>")
-                .append($subredditLabel)
-                .append($postTitle)
-                .appendTo($row);
+        // score cell
+        $score = $("<span class='badge'>").text(post.score);
+        $score.css("background-color", this.getPostColor(post.score));
+        $("<div class='col-md-1 score-cell'>").append($score).appendTo($row);
 
-            // comments cell
-            $commentsCell = $("<div class='col-md-2 col-lg-1'>")
-                .appendTo($row);
-            $("<a>")
-                .attr("href", "#")
-                .text("comments").appendTo($commentsCell);
+        // title cell
+        $subredditLink = $("<a>")
+            .attr("href", "http://reddit.com/r/" + post.subreddit)
+            .text(post.subreddit);
+        $subredditLabel = $("<span class='label label-default'>")
+            .append($subredditLink);
+        $postTitle = $("<a>")
+            .attr("href", post.url)
+            .text(post.title);
+        $("<div class='col-md-9 col-lg-10 title-cell'>")
+            .append($subredditLabel)
+            .append($postTitle)
+            .appendTo($row);
+
+        // comments cell
+        $commentsCell = $("<div class='col-md-2 col-lg-1'>")
+            .appendTo($row);
+        $("<a class='comment-link'>")
+            .data("post-id", post.id)
+            .attr("href", "#")
+            .text("comments").appendTo($commentsCell);
 
 
-            $li.wrapInner($row).hide();
-            var MAX_ITEMS = 30;
-            this.$feed.prepend($li);
-            $li.show("drop");
+        $li.wrapInner($row).hide();
+        var MAX_ITEMS = 30;
+        this.$feed.prepend($li);
+        $li.show("drop");
 
-            if (this.$feed.children().length > MAX_ITEMS) {
-                this.$feed.children().last().remove();
-            }
+        if (this.$feed.children().length > MAX_ITEMS) {
+            this.$feed.children().last().remove();
         }
     };
 
