@@ -155,14 +155,14 @@
 
         // percent new/popular sliders/text
 
-        this.$percentNewSlider.slider({"value": this.app.percentNew * 100});
+        this.$percentNewSlider.slider({"value": this.app.percentNew});
         this.$percentNew.text(this.app.percentNew * 100);
-        this.$percentPopular.text(100 - this.app.percentNew * 100);
+        this.$percentPopular.text(100 - this.app.percentNew);
 
         this.$percentNewSlider.on("slide", function (evt, ui) {
             that.$percentNew.text(ui.value);
             that.$percentPopular.text(100 - ui.value);
-            that.app.percentNew = ui.value / 100.0;
+            that.app.percentNew = ui.value;
         });
     };
 
@@ -218,7 +218,7 @@
 
     var RedditBigSpy = function () {
         this.api = new RedditApi();
-        this.percentNew = 0.2;
+        this.percentNew = 20;
         this.postInterval = 2000;
 
         this.view = new RedditBigSpyView(this);
@@ -238,7 +238,7 @@
     };
 
     RedditBigSpy.prototype.getPost = function () {
-        if (Math.random() <= this.percentNew) {
+        if (Math.random() <= this.percentNew / 100.0) {
             return this.api.newPost();
         }
         return this.api.hotPost();
