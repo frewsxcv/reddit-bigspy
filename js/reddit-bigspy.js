@@ -258,6 +258,7 @@
     RedditBigSpyView.prototype.showPost = function (post) {
         if (!post) {
             console.log("post was empty");
+            return;
         }
 
         var that = this;
