@@ -52,7 +52,7 @@
         var path = "subreddits/search.json?q=" + query + "&limit=" + LIMIT;
         this.apiCall(path, function (response) {
             var results = [];
-            response.children.forEach(function (sub) {
+            response.data.children.forEach(function (sub) {
                 results.push(sub.data.display_name);
             });
             callback(results);
@@ -111,10 +111,9 @@
 
             this.apiCall(path, function (data) {
                 data[1].data.children.forEach(function (comment) {
-                    that.hot.push(comment);
+                    that.hot.push(comment.data);
                     that.seen[comment.name] = true;
                 });
-                console.log(that.hot);
             });
         }
     };
@@ -158,10 +157,9 @@
 
             this.apiCall(path, function (data) {
                 data[1].data.children.forEach(function (comment) {
-                    that.hot.push(comment);
+                    that.new.push(comment.data);
                     that.seen[comment.name] = true;
                 });
-                console.log(that.hot);
             });
         }
     };
@@ -294,6 +292,40 @@
         return tinycolor.desaturate(green, desatAmount).toHexString();
     };
 
+    RedditBigSpyView.prototype.showItem = function (item) {
+        if (this.app.api.mode === "posts") {
+            this.showPost(item);
+        } else if (this.app.api.mode === "comments") {
+            this.showComment(item);
+        }
+    };
+
+    RedditBigSpyView.prototype.showComment = function (comment) {
+        if (!comment) {
+            console.log("comment was empty");
+            return;
+        }
+
+        var $li, $row, $score, score;
+
+        $li = $("<li>");
+        $row = $("<div class='row feed-item'>");
+
+        // score cell
+        score = comment.ups - comment.downs;
+        $score = $("<span class='badge'>").text(score);
+        $score.css("background-color", this.getPostColor(score));
+        $("<div class='col-md-1 score-cell'>").append($score).appendTo($row);
+
+        // body cell
+        var $bodyCell = $("<div class='col-md-11'>");
+        var bodyText = $($.parseHTML(comment.body_html)).text();
+        $bodyCell.html(bodyText).appendTo($row);
+
+        $li.wrapInner($row).hide();
+        this.addToFeed($li);
+    };
+
     RedditBigSpyView.prototype.showPost = function (post) {
         if (!post) {
             console.log("post was empty");
@@ -341,12 +373,16 @@
             .appendTo($row)
             .append($commentsLink);
 
-
-
         $li.wrapInner($row).hide();
+        this.addToFeed($li);
+    };
+
+    RedditBigSpyView.prototype.addToFeed = function (elem) {
         var MAX_ITEMS = 30;
-        this.$feed.prepend($li);
-        $li.show("drop");
+        var $elem = $(elem).hide();
+
+        this.$feed.prepend($elem);
+        $elem.show("drop");
 
         if (this.$feed.children().length > MAX_ITEMS) {
             this.$feed.children().last().remove();
@@ -370,9 +406,9 @@
             var firstItem = that.api.hotItem();
             window.setInterval(function () {
                 var post = that.getItem();
-                that.view.showPost(post);
+                that.view.showItem(post);
             }, that.postInterval);
-            that.view.showPost(firstItem);
+            that.view.showItem(firstItem);
         });
         this.api.refreshNew();
     };
