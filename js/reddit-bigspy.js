@@ -174,8 +174,8 @@
                     $(this).dialog("close");
                 },
                 "Save": function () {
-                    var newSub = that.$subredditField.val();
-                    var oldSub = that.app.api.currSubreddit;
+                    var newSub = $.trim(that.$subredditField.val());
+                    var oldSub = that.app.api.currSubreddit || "";
 
                     that.app.percentNew = updatedPercentNew;
 
