@@ -131,6 +131,8 @@
         this.$settingsDialog = $("#settings-dialog");
         this.$settingsButton = $("#settings-button");
         this.$percentNewSlider = $("#percent-new-slider");
+        this.$percentNew = $("#percent-new");
+        this.$percentPopular = $("#percent-popular");
 
         this.registerSettings();
     };
@@ -147,6 +149,11 @@
         });
 
         this.$percentNewSlider.slider();
+
+        this.$percentNewSlider.on("slide", function (evt, ui) {
+            that.$percentNew.text(ui.value);
+            that.$percentPopular.text(100 - ui.value);
+        });
     };
 
     RedditBigSpyView.prototype.getPostColor = function (score) {
