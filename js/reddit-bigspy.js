@@ -16,6 +16,7 @@
 
     var RedditApi = function () {
         this.currSubreddit = undefined;
+        this.currPost = undefined;
 
         this.hot = [];
         this.lastHot = undefined;
@@ -24,6 +25,8 @@
         this.lastNew = undefined;
 
         this.seen = {};
+
+        this.mode = "posts";
     };
 
     RedditApi.prototype._reset = function () {
@@ -64,7 +67,7 @@
             "dataType": "jsonp",
             "jsonp": "jsonp",
             "success": function (response) {
-                callback(response.data);
+                callback(response);
             },
         });
     };
@@ -72,59 +75,95 @@
     RedditApi.prototype.refreshHot = function (callback) {
         var path = "", that = this;
 
-        if (this.currSubreddit) {
-            path += "r/" + this.currSubreddit;
-        }
-        path += "/hot.json";
-        if (this.lastHot) {
-            path += "?after=" + this.lastHot;
-        }
+        if (this.mode === "posts") {
+            if (this.currSubreddit) {
+                path += "r/" + this.currSubreddit;
+            }
 
-        this.apiCall(path, function (data) {
-            var posts = data.children;
-            posts.forEach(function (post) {
-                post = post.data;
-                if (!that.seen.hasOwnProperty(post.name)) {
-                    that.hot.push(post);
-                    that.seen[post.name] = true;
+            path += "/hot.json";
+            if (this.lastHot) {
+                path += "?after=" + this.lastHot;
+            }
+
+            this.apiCall(path, function (data) {
+                var posts = data.data.children;
+                posts.forEach(function (post) {
+                    post = post.data;
+                    if (!that.seen.hasOwnProperty(post.name)) {
+                        that.hot.push(post);
+                        that.seen[post.name] = true;
+                    }
+                });
+                if (posts) {
+                    that.lastHot = posts.pop().data.name;
+                }
+                if (callback) {
+                    callback();
                 }
             });
-            if (posts) {
-                that.lastHot = posts.pop().data.name;
+        } else if (this.mode === "comments") {
+            path += this.currPost;
+
+            path += "/hot.json";
+            if (this.lastHot) {
+                path += "?after=" + this.lastHot;
             }
-            if (callback) {
-                callback();
-            }
-        });
+
+            this.apiCall(path, function (data) {
+                data[1].data.children.forEach(function (comment) {
+                    that.hot.push(comment);
+                    that.seen[comment.name] = true;
+                });
+                console.log(that.hot);
+            });
+        }
     };
 
     RedditApi.prototype.refreshNew = function (callback) {
         var path = "", that = this;
 
-        if (this.currSubreddit) {
-            path += "r/" + this.currSubreddit;
-        }
-        path += "/new.json";
-        if (this.lastNew) {
-            path += "?after=" + this.lastNew;
-        }
+        if (this.mode === "posts") {
+            if (this.currSubreddit) {
+                path += "r/" + this.currSubreddit;
+            }
 
-        this.apiCall(path, function (data) {
-            var posts = data.children;
-            posts.forEach(function (post) {
-                post = post.data;
-                if (!that.seen.hasOwnProperty(post.name)) {
-                    that.new.push(post);
-                    that.seen[post.name] = true;
+            path += "/new.json";
+            if (this.lastNew) {
+                path += "?after=" + this.lastNew;
+            }
+
+            this.apiCall(path, function (data) {
+                var posts = data.data.children;
+                posts.forEach(function (post) {
+                    post = post.data;
+                    if (!that.seen.hasOwnProperty(post.name)) {
+                        that.new.push(post);
+                        that.seen[post.name] = true;
+                    }
+                });
+                if (posts) {
+                    that.lastNew = posts.pop().data.name;
+                }
+                if (callback) {
+                    callback();
                 }
             });
-            if (posts) {
-                that.lastNew = posts.pop().data.name;
+        } else if (this.mode === "comments") {
+            path += this.currPost;
+
+            path += "/new.json";
+            if (this.lastNew) {
+                path += "?after=" + this.lastNew;
             }
-            if (callback) {
-                callback();
-            }
-        });
+
+            this.apiCall(path, function (data) {
+                data[1].data.children.forEach(function (comment) {
+                    that.hot.push(comment);
+                    that.seen[comment.name] = true;
+                });
+                console.log(that.hot);
+            });
+        }
     };
 
     RedditApi.prototype.hotItem = function () {
@@ -294,6 +333,9 @@
             .text("comments");
         $commentsLink.click(function () {
             that.clear();
+            that.app.api.switchMode("comments");
+            that.app.api.currPost = "/r/" + post.subreddit + "/comments/" +
+                post.id;
         });
         $commentsCell = $("<div class='col-md-2 col-lg-1'>")
             .appendTo($row)
