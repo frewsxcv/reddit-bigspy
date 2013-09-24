@@ -367,17 +367,17 @@
     RedditBigSpy.prototype.start = function () {
         var that = this;
         this.api.refreshHot(function () {
-            var firstPost = that.api.hotItem();
+            var firstItem = that.api.hotItem();
             window.setInterval(function () {
-                var post = that.getPost();
+                var post = that.getItem();
                 that.view.showPost(post);
             }, that.postInterval);
-            that.view.showPost(firstPost);
+            that.view.showPost(firstItem);
         });
         this.api.refreshNew();
     };
 
-    RedditBigSpy.prototype.getPost = function () {
+    RedditBigSpy.prototype.getItem = function () {
         if (Math.random() <= this.percentNew / 100.0) {
             return this.api.newItem();
         }
