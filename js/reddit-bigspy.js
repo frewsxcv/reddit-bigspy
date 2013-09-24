@@ -126,7 +126,9 @@
 
     /* Reddit BigSpy view */
 
-    var RedditBigSpyView = function () {
+    var RedditBigSpyView = function (app) {
+        this.app = app;
+
         this.$feed = $("#feed");
         this.$settingsDialog = $("#settings-dialog");
         this.$settingsButton = $("#settings-button");
@@ -148,7 +150,9 @@
             that.$settingsDialog.dialog("open");
         });
 
-        this.$percentNewSlider.slider();
+        this.$percentNewSlider.slider({"value": this.app.percentNew * 100});
+        this.$percentNew.text(this.app.percentNew * 100);
+        this.$percentPopular.text(100 - this.app.percentNew * 100);
 
         this.$percentNewSlider.on("slide", function (evt, ui) {
             that.$percentNew.text(ui.value);
@@ -208,9 +212,10 @@
 
     var RedditBigSpy = function () {
         this.api = new RedditApi();
-        this.view = new RedditBigSpyView();
         this.percentNew = 0.2;
         this.postInterval = 2000;
+
+        this.view = new RedditBigSpyView(this);
     };
 
     RedditBigSpy.prototype.start = function () {
