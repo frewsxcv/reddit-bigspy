@@ -128,18 +128,22 @@
 
     var RedditBigSpyView = function () {
         this.$feed = $("#feed");
+        this.$settingsDialog = $("#settings-dialog");
+        this.$settingsButton = $("#settings-button");
+        this.$percentNewSlider = $("#percent-new-slider");
+
         this.registerSettings();
     };
 
     RedditBigSpyView.prototype.registerSettings = function () {
-        $("#settings-dialog").dialog({
+        this.$settingsDialog.dialog({
             "autoOpen": false,
         });
 
-        $("#percent-new-slider").slider();
+        this.$percentNewSlider.slider();
 
-        $("#settings-button").click(function () {
-            $("#settings-dialog").dialog("open");
+        this.$settingsButton.click(function () {
+            this.$settingsDialog.dialog("open");
         });
     };
 
