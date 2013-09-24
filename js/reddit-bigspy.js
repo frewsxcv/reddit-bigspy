@@ -161,7 +161,11 @@
     };
 
     RedditBigSpyView.prototype.clear = function () {
-        this.$feed.empty();
+        var that = this;
+        this.$feed.hide("drop", function () {
+            that.$feed.empty();
+            that.$feed.show("drop");
+        });
     };
 
     RedditBigSpyView.prototype.setupSettings = function () {
