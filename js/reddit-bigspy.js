@@ -129,11 +129,11 @@
     };
 
     RedditApi.prototype.newPost = function () {
-        if (this.hot.length < 5) {
+        if (this.new.length < 5) {
             this.refreshNew();
         }
 
-        if (this.hot.length > 0) {
+        if (this.new.length > 0) {
             return Utils.popRandom(this.new);
         }
     };
