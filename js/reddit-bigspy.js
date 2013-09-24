@@ -162,6 +162,7 @@
         this.$percentNewSlider.on("slide", function (evt, ui) {
             that.$percentNew.text(ui.value);
             that.$percentPopular.text(100 - ui.value);
+            this.app.percentNew = ui.value / 100.0;
         });
     };
 
