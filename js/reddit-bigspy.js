@@ -118,7 +118,7 @@
         });
     };
 
-    RedditApi.prototype.hotPost = function () {
+    RedditApi.prototype.hotItem = function () {
         if (this.hot.length < 5) {
             this.refreshHot();
         }
@@ -128,7 +128,7 @@
         }
     };
 
-    RedditApi.prototype.newPost = function () {
+    RedditApi.prototype.newItem = function () {
         if (this.new.length < 5) {
             this.refreshNew();
         }
@@ -315,7 +315,7 @@
     RedditBigSpy.prototype.start = function () {
         var that = this;
         this.api.refreshHot(function () {
-            var firstPost = that.api.hotPost();
+            var firstPost = that.api.hotItem();
             window.setInterval(function () {
                 var post = that.getPost();
                 that.view.showPost(post);
@@ -327,9 +327,9 @@
 
     RedditBigSpy.prototype.getPost = function () {
         if (Math.random() <= this.percentNew / 100.0) {
-            return this.api.newPost();
+            return this.api.newItem();
         }
-        return this.api.hotPost();
+        return this.api.hotItem();
     };
 
 
