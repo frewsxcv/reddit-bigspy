@@ -259,6 +259,7 @@
         // percent new/popular sliders/text
 
         this.updatePercentNewView(this.app.percentNew);
+        updatedPercentNew = this.app.percentNew;
 
         this.$percentNewSlider.on("slide", function (evt, ui) {
             that.$percentNew.text(ui.value);
@@ -368,6 +369,13 @@
             that.app.api.switchMode("comments");
             that.app.api.currPost = "/r/" + post.subreddit + "/comments/" +
                 post.id;
+            var $button = $("<button>Go back</button>");
+            $button.click(function () {
+                that.clear();
+                that.app.api.switchMode("posts");
+                $button.remove();
+            });
+            $("body > .container").prepend($button);
         });
         $commentsCell = $("<div class='col-md-2 col-lg-1'>")
             .appendTo($row)
