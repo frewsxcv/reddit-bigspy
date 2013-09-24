@@ -296,7 +296,13 @@
 
     RedditBigSpyView.prototype.showComment = function (comment) {
         if (!comment) {
-            console.log("comment was empty");
+            console.error("comment was empty");
+            return;
+        }
+
+        if (isNaN(comment.ups) || isNaN(comment.downs)) {
+            console.log(comment.ups, comment.downs);
+            console.error("comment scores were empty");
             return;
         }
 
@@ -322,7 +328,7 @@
 
     RedditBigSpyView.prototype.showPost = function (post) {
         if (!post) {
-            console.log("post was empty");
+            console.error("post was empty");
             return;
         }
 
