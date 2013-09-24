@@ -26,13 +26,22 @@
         this.seen = {};
     };
 
-    RedditApi.prototype.switchSubreddit = function (subreddit) {
-        this.currSubreddit = subreddit;
+    RedditApi.prototype._reset = function () {
         this.hot = [];
         this.new = [];
         this.seen = {};
         this.lastHot = undefined;
         this.lastNew = undefined;
+    };
+
+    RedditApi.prototype.switchSubreddit = function (subreddit) {
+        this.currSubreddit = subreddit;
+        this._reset();
+    };
+
+    RedditApi.prototype.switchMode = function (mode) {
+        this.mode = mode;
+        this._reset();
     };
 
     RedditApi.prototype.searchSubreddits = function (query, callback) {
