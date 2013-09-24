@@ -136,10 +136,10 @@
         this.$percentNew = $("#percent-new");
         this.$percentPopular = $("#percent-popular");
 
-        this.registerSettings();
+        this.setupSettings();
     };
 
-    RedditBigSpyView.prototype.registerSettings = function () {
+    RedditBigSpyView.prototype.setupSettings = function () {
         var that = this;
 
         // settings button/dialog
