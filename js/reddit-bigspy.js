@@ -146,6 +146,12 @@
 
         this.$settingsDialog.dialog({
             "autoOpen": false,
+            "buttons": {
+                "Cancel": function () {
+                },
+                "Save": function () {
+                },
+            },
         });
 
         this.$settingsButton.click(function () {
