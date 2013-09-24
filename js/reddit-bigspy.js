@@ -252,7 +252,7 @@
         }
 
         var $li, $row, $score, $postTitle, $subredditLink,
-            $subredditLabel, $commentsCell;
+            $subredditLabel, $commentsCell, $commentsLink;
 
         $li = $("<li>");
         $row = $("<div class='row feed-item'>");
@@ -277,12 +277,13 @@
             .appendTo($row);
 
         // comments cell
-        $commentsCell = $("<div class='col-md-2 col-lg-1'>")
-            .appendTo($row);
-        $("<a class='comment-link'>")
+        $commentsLink = $("<a class='comment-link'>")
             .data("post-id", post.id)
             .attr("href", "#")
-            .text("comments").appendTo($commentsCell);
+            .text("comments");
+        $commentsCell = $("<div class='col-md-2 col-lg-1'>")
+            .appendTo($row);
+
 
 
         $li.wrapInner($row).hide();
