@@ -12,9 +12,9 @@
     };
 
 
-    /* Redit */
+    /* RedditApi */
 
-    var Reddit = function () {
+    var RedditApi = function () {
         this.currSubreddit = undefined;
 
         this.hot = [];
@@ -26,13 +26,13 @@
         this.seen = {};
     };
 
-    Reddit.prototype.switchSubreddit = function (subreddit) {
+    RedditApi.prototype.switchSubreddit = function (subreddit) {
         this.currSubreddit = subreddit;
         this.hot = [];
         this.new = [];
     };
 
-    Reddit.prototype.apiCall = function (path, callback) {
+    RedditApi.prototype.apiCall = function (path, callback) {
         var apiEndpoint = "http://www.reddit.com/" + path;
 
         $.ajax({
@@ -45,7 +45,7 @@
         });
     };
 
-    Reddit.prototype.refreshHot = function (callback) {
+    RedditApi.prototype.refreshHot = function (callback) {
         var path = "", that = this;
 
         if (this.currSubreddit) {
@@ -74,7 +74,7 @@
         });
     };
 
-    Reddit.prototype.refreshNew = function (callback) {
+    RedditApi.prototype.refreshNew = function (callback) {
         var path = "", that = this;
 
         if (this.currSubreddit) {
@@ -103,7 +103,7 @@
         });
     };
 
-    Reddit.prototype.hotPost = function () {
+    RedditApi.prototype.hotPost = function () {
         if (this.hot.length < 5) {
             this.refreshHot();
         }
@@ -113,7 +113,7 @@
         }
     };
 
-    Reddit.prototype.newPost = function () {
+    RedditApi.prototype.newPost = function () {
         if (this.hot.length < 5) {
             this.refreshNew();
         }
@@ -194,7 +194,7 @@
     /* Reddit BigSpy */
 
     var RedditBigSpy = function () {
-        this.api = new Reddit();
+        this.api = new RedditApi();
         this.view = new RedditBigSpyView();
         this.percentNew = 0.2;
         this.postInterval = 2000;
