@@ -251,6 +251,7 @@
             console.log("post was empty");
         }
 
+        var that = this;
         var $li, $row, $score, $postTitle, $subredditLink,
             $subredditLabel, $commentsCell, $commentsLink;
 
@@ -281,6 +282,9 @@
             .data("post-id", post.id)
             .attr("href", "#")
             .text("comments");
+        $commentsLink.click(function () {
+            that.clear();
+        });
         $commentsCell = $("<div class='col-md-2 col-lg-1'>")
             .appendTo($row)
             .append($commentsLink);
