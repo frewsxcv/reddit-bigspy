@@ -179,7 +179,7 @@
             "buttons": {
                 "Cancel": function () {
                     that.updatePercentNewView(that.app.percentNew);
-                    that.$subredditField = that.app.api.currSubreddit;
+                    that.$subredditField.val(that.app.api.currSubreddit);
                     $(this).dialog("close");
                 },
                 "Save": function () {
