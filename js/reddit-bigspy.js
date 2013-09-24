@@ -30,6 +30,9 @@
         this.currSubreddit = subreddit;
         this.hot = [];
         this.new = [];
+        this.seen = {};
+        this.lastHot = undefined;
+        this.lastNew = undefined;
     };
 
     RedditApi.prototype.searchSubreddits = function (query, callback) {
@@ -63,7 +66,7 @@
         if (this.currSubreddit) {
             path += "r/" + this.currSubreddit;
         }
-        path += "hot.json";
+        path += "/hot.json";
         if (this.lastHot) {
             path += "?after=" + this.lastHot;
         }
@@ -92,7 +95,7 @@
         if (this.currSubreddit) {
             path += "r/" + this.currSubreddit;
         }
-        path += "new.json";
+        path += "/new.json";
         if (this.lastNew) {
             path += "?after=" + this.lastNew;
         }
@@ -152,6 +155,10 @@
         this.setupSettings();
     };
 
+    RedditBigSpyView.prototype.clear = function () {
+        this.$feed.empty();
+    };
+
     RedditBigSpyView.prototype.setupSettings = function () {
         var that = this, updatedPercentNew;
 
@@ -163,10 +170,20 @@
             "buttons": {
                 "Cancel": function () {
                     that.updatePercentNewView(that.app.percentNew);
+                    that.$subredditField = that.app.api.currSubreddit;
                     $(this).dialog("close");
                 },
                 "Save": function () {
+                    var newSub = that.$subredditField.val();
+                    var oldSub = that.app.api.currSubreddit;
+
                     that.app.percentNew = updatedPercentNew;
+
+                    if (newSub !== oldSub) {
+                        that.app.api.switchSubreddit(newSub);
+                        that.clear();
+                    }
+
                     $(this).dialog("close");
                 },
             },
