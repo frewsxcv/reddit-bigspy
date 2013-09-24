@@ -32,6 +32,18 @@
         this.new = [];
     };
 
+    RedditApi.prototype.searchSubreddits = function (query, callback) {
+        var LIMIT = 5;
+        var path = "subreddits/search.json?q=" + query + "&limit=" + LIMIT;
+        this.apiCall(path, function (response) {
+            var results = [];
+            response.children.forEach(function (sub) {
+                results.push(sub.data.display_name);
+            });
+            callback(results);
+        });
+    };
+
     RedditApi.prototype.apiCall = function (path, callback) {
         var apiEndpoint = "http://www.reddit.com/" + path;
 
@@ -135,6 +147,7 @@
         this.$percentNewSlider = $("#percent-new-slider");
         this.$percentNew = $("#percent-new");
         this.$percentPopular = $("#percent-popular");
+        this.$subredditField = $("#subreddit-field");
 
         this.setupSettings();
     };
@@ -171,6 +184,17 @@
             that.$percentNew.text(ui.value);
             that.$percentPopular.text(100 - ui.value);
             updatedPercentNew = ui.value;
+        });
+
+
+        // autocomplete
+
+        this.$subredditField.autocomplete({
+            "source": function (req, res) {
+                that.app.api.searchSubreddits(req.term, function (subs) {
+                    res(subs);
+                });
+            },
         });
     };
 
