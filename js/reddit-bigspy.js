@@ -287,6 +287,17 @@
     };
 
     RedditBigSpyView.prototype.showItem = function (item) {
+        if (!item) {
+            console.debug("item is empty");
+            return;
+        }
+
+        var type = item.subreddit_id.split("_")[0];
+        if ((type === "t1" && this.app.api.mode !== "comments") ||
+            (type === "t3" && this.app.api.mode !== "posts")) {
+            return;
+        }
+
         if (this.app.api.mode === "posts") {
             this.showPost(item);
         } else if (this.app.api.mode === "comments") {
@@ -295,11 +306,6 @@
     };
 
     RedditBigSpyView.prototype.showComment = function (comment) {
-        if (!comment) {
-            console.error("comment was empty");
-            return;
-        }
-
         if (isNaN(comment.ups) || isNaN(comment.downs)) {
             console.log(comment.ups, comment.downs);
             console.error("comment scores were empty");
@@ -327,11 +333,6 @@
     };
 
     RedditBigSpyView.prototype.showPost = function (post) {
-        if (!post) {
-            console.error("post was empty");
-            return;
-        }
-
         var that = this;
         var $li, $row, $score, $postTitle, $subredditLink,
             $subredditLabel, $commentsCell, $commentsLink;
