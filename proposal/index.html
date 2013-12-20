@@ -1,0 +1,55 @@
+<html>
+  <body>
+    <h1>Reddit BigSpy</h1>
+    <h2>CSC 490 Project Proposal by <a href="http://rwell.org">Corey Farwell</a> (cfarwell@calpoly.edu)</h2>
+    <hr>
+
+    <h3>Overview</h3>
+
+    <p>When the social media website Digg was at the height of its popularity years ago, it released a few tools for visualizing data from their website. Digg contracted out to <a href="http://stamen.com">stamen design</a> to create these tools and were released under a new project called "Digg Labs". One of the tools they released was called BigSpy. It was a way for users view a "live feed" of new and popular stories submitted to the Digg. Stamen's article on the tool can be found <a href="http://stamen.com/diggspy">here</a>. You can see a screenshot and video of the product below:</p>
+    <img src="screenshot.png" alt="Digg BigSpy screenshot" width="600">
+    <iframe width="420" height="315" src="//www.youtube.com/embed/0UXPeTmSKQA" frameborder="0" allowfullscreen></iframe>
+    <p>One of the main features of Digg was it's ability for users to vote on articles. Articles that received a high number of votes were displayed with larger text in BigSpy. I'm not entirely sure (nor does the internet apparently) when Digg labs was shut down, but the project now ceases to exist. A popular open source social website called <a href="http://reddit.com">reddit</a> follows a similar model to Digg where users vote on stories that surface to the front page. Additionally, reddit introduces the concept of a 'subreddit' which you can read about <a href="http://www.reddit.com/wiki/faq#wiki_what_are_subreddits.3F">here</a> (examples include <a href="http://calpoly.reddit.com">/r/calpoly</a>, <a href="http://slo.reddit.com">/r/slo</a>, <a href="http://javascript.reddit.com">/r/javascript</a>, <a href="http://jquery.reddit.com">/r/jquery</a>). This proposed project, Reddit BigSpy, would reimplement the BigSpy visualization but using reddit instead of Digg. Just like the original, users will be able to click on the links from the "feed" as they appear in the visualization. In addition, unlike the original, there will be a separate link to view a "feed" of comments in a similar vein as the "feed" of links (with new/popular comments appearing as they come in).</p>
+
+    <h3>Reddit API</h3>
+
+    <p>Reddit has a free, public API documented <a href="http://www.reddit.com/dev/api">here</a>. While the API provides methods for user authentication, they will not be necessary for the purposes of this project. The API will be used to retrieve Reddit stories/links while allowing the user to specify other parameters.</p>
+
+    <h4>Specific API Methods</h4>
+
+    <p>All of the API methods below will be used in Reddit BigSpy and do not require authentication:</p>
+
+    <dl>
+      <dt>/hot, /new</dt>
+      <dd>These API methods allow developers to retrieve the most popular/newest stories posted on the front page or for a given subreddit. Specifically in Reddit BigSpy, these will be used to retrieve stories that will be put in the "feed" of stories.</dd>
+      <dt>/comments/article</dt>
+      <dd>This API method allows developers to retrieve comments from a given article. This will be used to retrieve articles for display in the Reddit BigSpy application.</dd>
+      <dt>/subreddits/search</dt>
+      <dd>This API method allows developers to search for (not in) subreddits. Specifically in Reddit BigSpy, this method will be used with jQuery UI's autocomplete element to assist the user when specifying a subreddit to use BigSpy with.</dd>
+    </dl>
+
+    <h3>Mockups</h3>
+
+    <p><em>NOTE: Please don't copy these mockups verbatim; they're intentionally ugly. As long as all the elements are there and the site has a flow similar to Digg BigSpy, you should be fine.</em></p>
+
+    <p>The overall layout/design of Reddit BigSpy will feel/look very similar to Digg BigSpy (though this mockup makes it appear much worse). The links will be sized according to their number of votes (shown on the right). In this mockup, we're looking at the top stories for the Cal Poly subreddit, though the default page for Reddit BigSpy will be displaying links from the reddit frontpage (all subreddits).</p>
+
+    <img src="mockup1.png" height="600" alt="" style="border: 1px solid black;">
+
+    <p>Each article link will contain a 'comments' link that will take them to a similar layout but displaying the comments for that article in a live "feed" layout similar to the article live "feed" layout. Each comment will have a vote count in addition to a link to the username of the commenter. There will also be a jQuery UI back button in the upper left to go back to the list of posts.</p>
+
+    <img src="mockup3.png" height="600" alt="" style="border: 1px solid black;">
+
+    <p>The settings button in the upper right will spawn a dialog that contains a couple elements. The first element (a slider) determines the balance of stories that should be displayed in the list of posts (new vs. popular). The second element is an input field that allows the user to specify a specific subreddit to display the posts for (as opposed the default, which is all subreddits). When the user starts typing, an autocomplete field will appear below suggesting subreddits.</p>
+
+    <img src="mockup2.png" height="600" alt="" style="border: 1px solid black;">
+
+    <h3>Use cases</h3>
+
+    <ol>
+      <li>I'm a fan of the TV show <em>Breaking Bad</em>. I would like to read other users' comments as they appear in a live discussion thread (like <a href="http://www.reddit.com/r/breakingbad/comments/1ljphv/breaking_bad_episode_discussion_s05e12_rabid_dog/">this one</a>) without refreshing the reddit page. I could go to Reddit BigSpy and view the comments live as they get posted to the thread.</li>
+      <li>I would like to view the top stories/links when I open my web browser. I would like to be able to have the most popular links be presented larger and in a more organized manner than the current reddit.com homepage.</li>
+    </ol>
+
+  </body>
+</html>
