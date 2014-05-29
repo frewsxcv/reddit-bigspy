@@ -53,7 +53,7 @@
     };
 
     RedditApi.prototype.apiCall = function (path, callback) {
-        var apiEndpoint = "http://www.reddit.com/" + path;
+        var apiEndpoint = "//www.reddit.com/" + path;
 
         $.ajax({
             "url": apiEndpoint,
